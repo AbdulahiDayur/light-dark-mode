@@ -1,10 +1,51 @@
-// async function getAPI() {
-//   const apiURL = ''
-//   try {
-//     const res = await axios.get(apiURL);
-//     const data = await res.data;
+const toggleSwitch = document.querySelector("input[type='checkbox']");
+const nav =document.getElementById('nav');
+const toggleIcon = document.getElementById('toggle-icon');
+const image1 = document.getElementById('image1');
+const image2 = document.getElementById('image2');
+const image3 = document.getElementById('image3');
+const textBox = document.getElementById('text-box');
 
-//   } catch (error) {
-//     console.log('Whoops', error);
-//   }
-// }
+function imageMode(imgColor) {
+  image1.src = `img/undraw_proud_coder_${imgColor}.svg`;
+  image2.src = `img/undraw_proud_coder_${imgColor}.svg`;
+  image3.src = `img/undraw_proud_coder_${imgColor}.svg`;
+}
+
+function mode(iconImgRemove, iconImgAdd, navBackgroundColor, textBackgroundColor, modeText) {
+  nav.style.backgroundColor = navBackgroundColor;
+  textBox.style.backgroundColor = textBackgroundColor;
+  toggleIcon.children[0].textContent = modeText;
+  toggleIcon.children[1].classList.remove(iconImgRemove);
+  toggleIcon.children[1].classList.add(iconImgAdd);
+}
+
+//Swithch theme dynamically
+function switchTheme(event) {
+  let checked = event.target.checked;
+
+  if (checked) {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    localStorage.setItem('theme', 'dark');
+    mode('fa-sun', 'fa-moon', 'rgb(0 0 0 / 50%)', 'rgb(255 255 255 / 50%)', 'Dark Mode');
+    imageMode('dark')
+  } else {
+    document.documentElement.setAttribute('data-theme', 'light');
+    localStorage.setItem('theme', 'light');
+    mode('fa-moon', 'fa-sun', 'rgb(255 255 255/ 50%)', 'rgb(0 0 0 / 50%)', 'Light Mode');
+    imageMode('light')
+  }
+}
+
+toggleSwitch.addEventListener("change", switchTheme);
+
+// Check Local Storage For Theme
+const currentTheme = localStorage.getItem('theme');
+if (currentTheme) {
+  document.documentElement.setAttribute('data-theme', currentTheme);
+
+  if (currentTheme == 'dark') {
+    toggleSwitch.checked = true;
+    mode('fa-sun', 'fa-moon', 'rgb(0 0 0 / 50%)', 'rgb(255 255 255 / 50%)', 'Dark Mode');
+  }
+}
