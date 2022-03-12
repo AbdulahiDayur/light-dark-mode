@@ -20,6 +20,14 @@ function mode(iconImgRemove, iconImgAdd, navBackgroundColor, textBackgroundColor
   toggleIcon.children[1].classList.add(iconImgAdd);
 }
 
+function toggleDarkLightMode(isLight) {
+  nav.style.backgroundColor = isLight ? 'rgb(255 255 255/ 50%)' : 'rgb(0 0 0 / 50%)';
+  textBox.style.backgroundColor = isLight ? 'rgb(0 0 0 / 50%)' : 'rgb(255 255 255/ 50%)';
+  toggleIcon.children[0].textContent = isLight ? 'Light Mode' : 'Dark Mode';
+  isLight ? toggleIcon.children[1].classList.replace('fa-moon', 'fa-sun') : 
+  toggleIcon.children[1].classList.replace('fa-sun', 'fa-moon');
+}
+
 //Swithch theme dynamically
 function switchTheme(event) {
   let checked = event.target.checked;
@@ -27,13 +35,13 @@ function switchTheme(event) {
   if (checked) {
     document.documentElement.setAttribute('data-theme', 'dark');
     localStorage.setItem('theme', 'dark');
-    mode('fa-sun', 'fa-moon', 'rgb(0 0 0 / 50%)', 'rgb(255 255 255 / 50%)', 'Dark Mode');
-    imageMode('dark')
+    toggleDarkLightMode(false);
+    imageMode('dark');
   } else {
     document.documentElement.setAttribute('data-theme', 'light');
     localStorage.setItem('theme', 'light');
-    mode('fa-moon', 'fa-sun', 'rgb(255 255 255/ 50%)', 'rgb(0 0 0 / 50%)', 'Light Mode');
-    imageMode('light')
+    toggleDarkLightMode(true);
+    imageMode('light');
   }
 }
 
