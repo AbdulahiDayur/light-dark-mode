@@ -26,6 +26,7 @@ function toggleDarkLightMode(isLight) {
   toggleIcon.children[0].textContent = isLight ? 'Light Mode' : 'Dark Mode';
   isLight ? toggleIcon.children[1].classList.replace('fa-moon', 'fa-sun') : 
   toggleIcon.children[1].classList.replace('fa-sun', 'fa-moon');
+  isLight ? imageMode('light') : imageMode('dark');
 }
 
 //Swithch theme dynamically
@@ -36,12 +37,10 @@ function switchTheme(event) {
     document.documentElement.setAttribute('data-theme', 'dark');
     localStorage.setItem('theme', 'dark');
     toggleDarkLightMode(false);
-    imageMode('dark');
   } else {
     document.documentElement.setAttribute('data-theme', 'light');
     localStorage.setItem('theme', 'light');
     toggleDarkLightMode(true);
-    imageMode('light');
   }
 }
 
